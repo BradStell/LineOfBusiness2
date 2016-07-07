@@ -4,62 +4,60 @@
     <meta charset="UTF-8">
     <title>Acme Product Management</title>
 
+    <!-- Style Sheets -->
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/app.css" rel="stylesheet"/>
+
     <!-- Library Scripts -->
     <script src="js/angular.js"></script>
+    <script src="js/angular-resource.js"></script>
+    <script src="js/angular-mock.js"></script>
 
     <!-- Application Scripts -->
     <script src="app/app.js"></script>
+
+    <!-- Services -->
+    <script src="common/services/common.services.js"></script>
+    <script src="common/services/productResource.js"></script>
+    <script src="common/services/productResourceMock.js"></script>
+
+    <!-- Product Controllers -->
+    <script src="app/products/productListCtrl.js"></script>
 </head>
 
 <body ng-app="productManagement">
-    <table ng-init='products = [
-        {
-            "productId": 1,
-            "productName": "Leaf Rake",
-            "productCode": "GDN-0011",
-            "releaseDate": "March 19, 2009",
-            "description": "Leaf rake with 48-inch handle",
-            "cost": 9.00,
-            "price": 19.95,
-            "category": "garden",
-            "tags": [ "leaf", "tool" ],
-            "imageUrl": "images/leaf-rake.jpg"
-        },
-        {
-            "productId": 2,
-            "productName": "Hammer",
-            "productCode": "TBX-0048",
-            "releaseDate": "March 21, 2013",
-            "description": "curved claw steel hammer",
-            "cost": 1.00,
-            "price": 8.99,
-            "category": "toolbox",
-            "tags": [ "tool" ],
-            "imageUrl": "images/hammer.png"
-        }
-    ]'>
-        <thead>
-            <tr>
-                <td>Image</td>
-                <td>Product</td>
-                <td>Code</td>
-                <td>Available</td>
-                <td>Price</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="product in products">
-                <td>
-                    <img ng-src="{{product.imageUrl}}"
-                         title="{{product.productName}}"
-                         style="width:50px;margin:2px">
-                </td>
-                <td>{{product.productName}}</td>
-                <td>{{product.productCode}}</td>
-                <td>{{product.releaseDate}}</td>
-                <td>{{product.price | currency}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="font-size:large">
+            Product List
+        </div>
+
+        <div class="panel-body">
+            <table class="table" ng-controller="ProductListCtrl as vm">
+                <thead>
+                    <tr>
+                        <td><button class="btn btn-primary" type="button" ng-click="vm.toggleImage()">{{vm.showImage ? "Hide" : "Show"}} Image</button> </td>
+                        <td>Product</td>
+                        <td>Code</td>
+                        <td>Available</td>
+                        <td>Price</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="product in vm.products">
+                        <td>
+                            <img ng-src="{{product.imageUrl}}"
+                                 title="{{product.productName}}"
+                                 style="width:50px;margin:2px"
+                                 ng-if="vm.showImage">
+                        </td>
+                        <td>{{product.productName}}</td>
+                        <td>{{product.productCode}}</td>
+                        <td>{{product.releaseDate}}</td>
+                        <td>{{product.price | currency}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
